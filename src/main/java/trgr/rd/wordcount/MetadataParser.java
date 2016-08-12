@@ -5,15 +5,14 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
+import java.nio.file.Paths;
+import java.util.*;
 import java.util.regex.Pattern;
 
 class MetadataParser {
 
     // Regex patterns for text processing of files
-	private static final Pattern PATTERN_STOP_WORDS = Pattern.compile("(?i)\\b(the|a|of|and|this|that|be|to|not|is|we|is|in)\\b");
+	private static final Pattern PATTERN_STOP_WORDS = Pattern.compile(getStopWordsRegex());
 	private static final Pattern PATTERN_PUNC = Pattern.compile("[^\\w\\s]");
 	private static final Pattern PATTERN_MULTI_SPACE = Pattern.compile("[\\s]{2,}");
 
@@ -72,4 +71,45 @@ class MetadataParser {
 		
 		return wordList;
 	}
+
+    /**
+     * Parses the file containing stop words, separated by new lines
+     * @return a string of stop words separated by pipes (i.e. "who|what|when|where|why"
+     */
+	private static String getStopWordsRegex()
+    {
+        try
+        {
+            Path filePath = Paths.get("./target/classes/stopwords.txt");
+
+            try (BufferedReader reader = new BufferedReader(Files.newBufferedReader(filePath)))
+            {
+                String line;
+                Set<String> wordSet = new HashSet<>();
+
+                while ((line = reader.readLine()) != null)
+                {
+                    wordSet.add(line);
+                }
+
+                StringBuilder stopWordsRegex = new StringBuilder("(?i)\\b(");
+                wordSet.forEach(word -> stopWordsRegex.append(word).append("|"));
+                stopWordsRegex.replace(stopWordsRegex.length()-1, stopWordsRegex.length(), "");
+                stopWordsRegex.append(")\\b");
+                System.out.println(stopWordsRegex);
+
+                return stopWordsRegex.toString();
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+
+        }
+
+        return "";
+    }
 }
