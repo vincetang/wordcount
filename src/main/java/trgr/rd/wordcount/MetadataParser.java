@@ -74,7 +74,7 @@ class MetadataParser {
 
     /**
      * Parses the file containing stop words, separated by new lines
-     * @return a string of stop words separated by pipes (i.e. "who|what|when|where|why"
+     * @return a regex string to capture stop words in the file
      */
 	private static String getStopWordsRegex()
     {
