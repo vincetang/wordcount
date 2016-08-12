@@ -11,11 +11,13 @@ import java.util.*;
 
 public class WordCountApp
 {
-//	private static ArrayList<File> files;
 	private static ArrayList<Path> paths;
 	static ArrayList<Map<String, Integer>> top25Counts;
 	private ArrayList<FileMetadata> fileMetadata;
-	
+
+    /**
+     * Constructor for WordCountApp
+     */
 	private WordCountApp()
 	{
 		this.fileMetadata = new ArrayList<>();
@@ -58,9 +60,7 @@ public class WordCountApp
 	        // Start application logic..
 	        System.out.println("Word count report...\n");
 	        
-	        // Create file objects in the path indicated by dir and add
-	        // them to the files ArrayList
-//	        files = new ArrayList<>();
+	        // Create an array to store Path objects representing files to read
 			paths = new ArrayList<>();
 
 	        try (DirectoryStream<Path> stream = Files.newDirectoryStream(dir))
@@ -85,7 +85,7 @@ public class WordCountApp
 	        	System.out.println(f.toString());
 	        }
 
-//	        // Summary of all files
+	        // Summary of all files
 	        Map<String, Integer> combinedMap = new HashMap<>();
 			top25Counts.forEach(combinedMap::putAll);
 	        Map<String, Integer> sortedCombinedMap = FileMetadata.sortByValue(combinedMap);

@@ -24,7 +24,8 @@ class FileMetadata {
 	 * Takes a file name and the file number
 	 * @param name - The simple name of the file
 	 */
-	FileMetadata(String name, int fileNumber) {
+	FileMetadata(String name, int fileNumber)
+	{
 		this.name = name;
 		this.fileNumber = fileNumber;
 		this.wordCounts = new HashMap<>();
@@ -45,7 +46,8 @@ class FileMetadata {
 	 * Increments the total word count by 1
 	 * @param word - the word being added
 	 */
-	private void addWord(String word) {
+	private void addWord(String word)
+	{
 		if (wordCounts.containsKey(word))
 			wordCounts.put(word, wordCounts.get(word) + 1);
 		else
@@ -63,7 +65,8 @@ class FileMetadata {
 	
 	/** Returns string of metadata in a readable format
 	 */
-	public String toString(){
+	public String toString()
+	{
 		StringBuilder s = new StringBuilder("File#: " + this.fileNumber + " " + this.name + '\n'
 				+ "Total Words: " + this.totalWordCount + '\n'
 				+ "Unique Words: " + this.countUniqueWords() + '\n');
@@ -95,26 +98,28 @@ class FileMetadata {
 	 * @param map The map to be sorted
 	 * @return The sorted map
 	 */
-    static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> map) {
-    	
+    static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> map)
+	{
 	    List<Map.Entry<K, V>> list = new LinkedList<>(map.entrySet());
 	    
 	    Collections.sort( list, (o1, o2) -> (o2.getValue()).compareTo(o1.getValue()));
 
 		Map<K, V> result = new LinkedHashMap<>();
+
 	    for (Map.Entry<K, V> entry : list)
 	    {
 	        result.put( entry.getKey(), entry.getValue() );
 	    }
 	    return result;
-}
+	}
     
 	/**
 	 * Used to return a sorted map object and adds the word counts for this file
 	 * to the top25Counts in the WordCountApp
 	 * @return Returns a map sorted in descending order of counts (values)
 	 */
-	private Map getSortedWordCounts() {
+	private Map getSortedWordCounts()
+	{
 		Map<String, Integer> sortedMap = sortByValue(this.wordCounts);
 		WordCountApp.top25Counts.add(sortedMap);
 		
