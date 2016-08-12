@@ -25,7 +25,7 @@ class MetadataParser {
 	 */
 	FileMetadata parse(int fileNumber, Path path)
     {
-		try (BufferedReader reader = new BufferedReader(Files.newBufferedReader(path, Charset.forName("US-ASCII"))))
+		try (BufferedReader reader = new BufferedReader(Files.newBufferedReader(path, Charset.forName("UTF-8"))))
         {
 
 			String line;
