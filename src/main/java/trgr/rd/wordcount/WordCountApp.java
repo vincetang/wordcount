@@ -24,7 +24,7 @@ public class WordCountApp {
     }
 
     /**
-     * Processes files' metadata and adds to fileMetadat ArrayList
+     * Processes files' metadata and adds to fileMetadata ArrayList
      */
     private void process()
     {

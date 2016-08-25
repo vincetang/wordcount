@@ -17,6 +17,8 @@ class MetadataParser {
     private static final Pattern PATTERN_MULTI_SPACE = Pattern.compile("[\\s]{2,}");
 
 
+    private static Set<String> wordSet;
+
     /**
      * Reads a file and returns an object representing the file's metadata
      *
@@ -32,7 +34,7 @@ class MetadataParser {
             String line;
 
             FileMetadata fmd = new FileMetadata(path.getFileName().toString(), fileNumber);
-            ArrayList<String> words;
+            List<String> words;
             while ((line = reader.readLine()) != null)
             {
                 // Remove stop words and get an array of words
@@ -57,20 +59,28 @@ class MetadataParser {
      * @param line - A string of a line in the file
      * @return An arraylist where each element is a word
      */
-    private ArrayList<String> parseLine(String line)
+    private List<String> parseLine(String line)
     {
 
-        String result = PATTERN_STOP_WORDS.matcher(
-                PATTERN_MULTI_SPACE.matcher(PATTERN_PUNC.matcher(line.toLowerCase()).replaceAll(""))
-                        .replaceAll("")).replaceAll("");
+        ArrayList<String> wordList = new ArrayList<>(Arrays.asList(line.split(" ")));
 
-        ArrayList<String> wordList = new ArrayList<>(Arrays.asList(result.split(" ")));
+        List<String> cleanedList = new ArrayList<>();
+
+        for (String word : wordList)
+        {
+
+            if (!wordSet.contains(word))
+            {
+                cleanedList.add(word);
+            }
+
+        }
 
         // Clean up null and space elements
-        wordList.removeAll(Collections.singleton(""));
-        wordList.removeAll(Collections.singleton(" "));
+        cleanedList.removeAll(Collections.singleton(""));
+        cleanedList.removeAll(Collections.singleton(" "));
 
-        return wordList;
+        return cleanedList;
     }
 
     /**
@@ -87,7 +97,7 @@ class MetadataParser {
             try (BufferedReader reader = new BufferedReader(Files.newBufferedReader(filePath)))
             {
                 String line;
-                Set<String> wordSet = new HashSet<>();
+                wordSet = new HashSet<>();
 
                 while ((line = reader.readLine()) != null)
                 {

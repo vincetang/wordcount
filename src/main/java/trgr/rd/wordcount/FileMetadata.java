@@ -37,7 +37,7 @@ class FileMetadata {
      *
      * @param words - an arraylist of words to add
      */
-    void addWords(ArrayList<String> words)
+    void addWords(List<String> words)
     {
         words.forEach(this::addWord);
     }
